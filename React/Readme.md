@@ -9,7 +9,7 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
 ## Table of Contents
 
   1. [Basic Rules](#basic-rules)
-  1. [Class vs `React.createClass` vs stateless](#class-vs-reactcreateclass-vs-stateless)
+  1. [Using Hooks instead of Classes](#Using-Hooks-instead-of-Classes)
   1. [Hooks-Rules](#Hooks-Rules)
   1. [Mixins](#mixins)
   1. [Deprecations](#Deprecations)
@@ -34,49 +34,17 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
   - Do not use `React.createElement` unless you’re initializing the app from a file that is not JSX.
   - [`react/forbid-prop-types`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-prop-types.md) will allow `arrays` and `objects` only if it is explicitly noted what `array` and `object` contains, using `arrayOf`, `objectOf`, or `shape`.
 
-## Class vs `React.createClass` vs stateless
+## Using Hooks instead of Classes
 
-  - If you have internal state and/or refs, prefer `class extends React.Component` over `React.createClass`. eslint: [`react/prefer-es6-class`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-es6-class.md) [`react/prefer-stateless-function`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/prefer-stateless-function.md)
+  - Classes confuse both people and machines With classes you need to understand binding and the context in which functions are called, which often becomes confusion.
 
-    ```jsx
-    // bad
-    const Listing = React.createClass({
-      // ...
-      render() {
-        return <div>{this.state.hello}</div>;
-      }
-    });
+  - Often with classes Mutually unrelated code often ends up together or related code tends to be split apart, it becomes more and more difficult to maintain. An example of such a case is event listeners, where you add listeners in componentDidMount and remove them in componentWillUnmount . Hooks let you combine these two
 
-    // good
-    class Listing extends React.Component {
-      // ...
-      render() {
-        return <div>{this.state.hello}</div>;
-      }
-    }
-    ```
+  - Hooks are a new addition to React in version 16.8 that allows you use state and other React features, like lifecycle methods, without writing a class.
 
-    And if you don’t have state or refs, prefer normal functions (not arrow functions) over classes:
+  - Hooks let you always use functions instead of having to constantly switch between functions, classes, higher-order components, and render props.
 
-    ```jsx
-    // bad
-    class Listing extends React.Component {
-      render() {
-        return <div>{this.props.hello}</div>;
-      }
-    }
-
-    // bad (relying on function name inference is discouraged)
-    const Listing = ({ hello }) => (
-      <div>{hello}</div>
-    );
-
-    // good
-    function Listing({ hello }) {
-      return <div>{hello}</div>;
-    }
-    ```
-
+  - Hooks allow us to reuse stateful logic without changing your component hierarchy.
 
 ## Hooks-Rules
   - Hooks are JavaScript functions, but you need to follow two rules when using them.
