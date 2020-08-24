@@ -10,7 +10,7 @@
 ##  Keep components small and function-specific
 - As we all know, with React, it’s possible to have huge components that execute a number of tasks. But a better way to design components is to keep them small, so that one component corresponds to one function.
 
-- Ideally, a single component should render a specific bit of your page or modify a particular behavior. There are many advantages to this:
+- Ideally, a single component should render a specific bit of your page or modify a particular behavior. There are many advantages to this.
 
 ##  Reusability is important
 - By sticking to the rule of one function = one component, we can improve the reusability of components. We should skip trying to build a new component for a function if there already exists a component for that function.
@@ -51,11 +51,11 @@ return (
 
 ## File Structure
 
--We organize all the files by function type ```components```, ```actions```, ```services```.
+- We organize all the files by function type ```components```, ```actions```, ```services```.
 
 
 ### Components Structure
-- if there’s any small component used by a particular component only, it makes sense to keep these smaller components all together within that component folder. The hierarchy will then be easy to understand – large components have their own folder and all their smaller parts are split into sub-folders. This way, we can easily extract code to any other project or even modify the code whenever we want.
+- If there’s any small component used by a particular component only, it makes sense to keep these smaller components all together within that component folder. The hierarchy will then be easy to understand – large components have their own folder and all their smaller parts are split into sub-folders. This way, we can easily extract code to any other project or even modify the code whenever we want.
 
 
 ```
