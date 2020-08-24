@@ -1,0 +1,92 @@
+# React.JS, Nexton Best Practice.
+
+1. [Keep components small and function-specific](#Keep-components-small-and-function-specific)
+1. [Reusability](#Reusability-is-important)
+1. [DRY your code](#DRY-your-code)
+1. [Components Name](#Components-Name)
+1. [Testing Code](#Testing-Code)
+1. [File Structure](#File-Structure)
+
+##  Keep components small and function-specific
+- As we all know, with React, it’s possible to have huge components that execute a number of tasks. But a better way to design components is to keep them small, so that one component corresponds to one function.
+
+- Ideally, a single component should render a specific bit of your page or modify a particular behavior. There are many advantages to this:
+
+##  Reusability is important
+- By sticking to the rule of one function = one component, we can improve the reusability of components. We should skip trying to build a new component for a function if there already exists a component for that function.
+
+## DRY your code
+
+- You can achieve this by scrutinizing the code for patterns and similarities. If you find any, it’s possible you’re repeating code and there’s scope to eliminate duplication. Most likely, a bit of rewriting can make it more concise.
+
+```jsx
+
+const buttons = ['facebook', 'twitter', 'youtube'];
+
+return (
+  <div>
+    {
+      buttons.map( (button) => {
+        return (
+          <IconButton
+            onClick={doStuff( button )}
+            iconClass={button}
+          />
+        );
+      } )
+    }
+  </div>
+);
+    
+```
+## Components Name
+
+- It’s a good practice to name a component after the function that it executes so that it’s easily recognizable.
+
+- For example, ```ProductTable``` – it conveys instantly what the component does. On the other hand, if we name the component based on the need for the code, it can be confuse at a future point of time.
+
+## Testing Code
+
+- The code we write should behave as expected, and be testable easily and quickly. It’s a good practice to name your test files identical to the source files with a ```.test``` suffix. It’ll then be easy to find the test files.
+
+## File Structure
+
+-We organize all the files by function type ```components```, ```actions```, ```services```.
+
+
+### Components Structure
+- if there’s any small component used by a particular component only, it makes sense to keep these smaller components all together within that component folder. The hierarchy will then be easy to understand – large components have their own folder and all their smaller parts are split into sub-folders. This way, we can easily extract code to any other project or even modify the code whenever we want.
+
+
+```
+my-app
+├── build
+├── node_modules
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src
+|   ├── actions
+│   ├── components
+│   │   ├── app
+│   │   │   ├── app.js
+│   │   │   └── app.test.js
+│   │   └── index.js
+│   ├── images
+│   │   └── logo.svg
+│   ├── packages
+│   │   └── ...
+│   ├── utils
+│   │   ├── ...
+│   │   └── index.js
+│   ├── index.css
+│   ├── index.js
+|   ├── Reducers
+|   ├── Services
+|   ├── Styles
+│   └── service-worker.js
+├── .gitignore
+├── package.json
+└── README.md
+```
