@@ -10,7 +10,9 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
 
   1. [Basic Rules](#basic-rules)
   1. [Class vs `React.createClass` vs stateless](#class-vs-reactcreateclass-vs-stateless)
+  1. [Hooks-Rules](#Hooks-Rules)
   1. [Mixins](#mixins)
+  1. [Deprecations](#Deprecations)
   1. [Naming](#naming)
   1. [Declaration](#declaration)
   1. [Alignment](#alignment)
@@ -75,17 +77,39 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
     }
     ```
 
+
+## Hooks-Rules
+  - Hooks are JavaScript functions, but you need to follow two rules when using them.
+
+  ### Only Call Hooks at the Top Level
+  - Don’t call Hooks inside loops, conditions, or nested functions. Instead, always use Hooks at the top level of your React function. By following this rule, you ensure that Hooks are called in the same order each time a component renders. That’s what allows React to correctly preserve the state of Hooks between multiple useState and useEffect calls
+
+  ### Only Call Hooks from React Functions
+  - Don’t call Hooks from regular JavaScript functions. Instead, you can:
+  - Call Hooks from React function components.
+  - Call Hooks from custom Hooks
+
+  [Hooks API References](https://reactjs.org/docs/hooks-reference.html)
 ## Mixins
 
   - [Do not use mixins](https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html).
 
   > Why? Mixins introduce implicit dependencies, cause name clashes, and cause snowballing complexity. Most use cases for mixins can be accomplished in better ways via components, higher-order components, or utility modules.
 
+## Deprecations
+- The React team has decided to deprecate some of the lifecycle methods with React 17. The lifecycle methods below will soon be deprecated.
+
+```
+  - componentWillMount
+  - componentWillRecieveProps
+  - componentWillUpdate
+```
+
 ## Naming
 
-  - **Extensions**: Use `.jsx` extension for React components. eslint: [`react/jsx-filename-extension`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md)
-  - **Filename**: Use PascalCase for filenames. E.g., `ReservationCard.jsx`.
-  - **Reference Naming**: Use PascalCase for React components and camelCase for their instances. eslint: [`react/jsx-pascal-case`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md)
+  - **Extensions**: Use `.js` extension for React components. eslint: [`react/jsx-filename-extension`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-filename-extension.md)
+  - **Filename**: Use PascalCase for filenames. E.g., `ReservationCard.js`.
+  - **Reference Naming**: Use PascalCase for React components and camelCase for their instances. eslint: [`react/js-pascal-case`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-pascal-case.md)
 
     ```jsx
     // bad
@@ -101,7 +125,7 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
     const reservationItem = <ReservationCard />;
     ```
 
-  - **Component Naming**: Use the filename as the component name. For example, `ReservationCard.jsx` should have a reference name of `ReservationCard`. However, for root components of a directory, use `index.jsx` as the filename and use the directory name as the component name:
+  - **Component Naming**: Use the filename as the component name. For example, `ReservationCard.js` should have a reference name of `ReservationCard`. However, for root components of a directory, use `index.js` as the filename and use the directory name as the component name:
 
     ```jsx
     // bad
