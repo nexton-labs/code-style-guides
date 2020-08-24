@@ -1,11 +1,26 @@
 # React.JS, Nexton Best Practice.
 
 1. [Keep components small and function-specific](#Keep-components-small-and-function-specific)
+1. [Using Hooks instead of Classes](#Using-Hooks-instead-of-Classes)
 1. [Reusability](#Reusability-is-important)
 1. [DRY your code](#DRY-your-code)
 1. [Components Name](#Components-Name)
 1. [Testing Code](#Testing-Code)
 1. [File Structure](#File-Structure)
+
+## Using Hooks instead of Classes
+
+  - Classes confuse both people and machines With classes you need to understand binding and the context in which functions are called, which often becomes confusion.
+
+  - Often with classes Mutually unrelated code often ends up together or related code tends to be split apart, it becomes more and more difficult to maintain. An example of such a case is event listeners, where you add listeners in componentDidMount and remove them in componentWillUnmount . Hooks let you combine these two
+
+  - Hooks are a new addition to React in version 16.8 that allows you use state and other React features, like lifecycle methods, without writing a class.
+
+  - Hooks let you always use functions instead of having to constantly switch between functions, classes, higher-order components, and render props.
+
+  - Hooks allow us to reuse stateful logic without changing your component hierarchy.
+
+[Hooks API References](https://reactjs.org/docs/hooks-reference.html)
 
 ##  Keep components small and function-specific
 - As we all know, with React, it’s possible to have huge components that execute a number of tasks. But a better way to design components is to keep them small, so that one component corresponds to one function.

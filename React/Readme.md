@@ -9,7 +9,6 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
 ## Table of Contents
 
   1. [Basic Rules](#basic-rules)
-  1. [Using Hooks instead of Classes](#Using-Hooks-instead-of-Classes)
   1. [Hooks-Rules](#Hooks-Rules)
   1. [Mixins](#mixins)
   1. [Deprecations](#Deprecations)
@@ -32,18 +31,6 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
   - Do not use `React.createElement` unless you’re initializing the app from a file that is not JSX.
   - [`react/forbid-prop-types`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-prop-types.md) will allow `arrays` and `objects` only if it is explicitly noted what `array` and `object` contains, using `arrayOf`, `objectOf`, or `shape`.
 
-## Using Hooks instead of Classes
-
-  - Classes confuse both people and machines With classes you need to understand binding and the context in which functions are called, which often becomes confusion.
-
-  - Often with classes Mutually unrelated code often ends up together or related code tends to be split apart, it becomes more and more difficult to maintain. An example of such a case is event listeners, where you add listeners in componentDidMount and remove them in componentWillUnmount . Hooks let you combine these two
-
-  - Hooks are a new addition to React in version 16.8 that allows you use state and other React features, like lifecycle methods, without writing a class.
-
-  - Hooks let you always use functions instead of having to constantly switch between functions, classes, higher-order components, and render props.
-
-  - Hooks allow us to reuse stateful logic without changing your component hierarchy.
-
 ## Hooks-Rules
   - Hooks are JavaScript functions, but you need to follow two rules when using them.
 
@@ -55,7 +42,6 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
   - Call Hooks from React function components.
   - Call Hooks from custom Hooks
 
-  [Hooks API References](https://reactjs.org/docs/hooks-reference.html)
 ## Mixins
 
   - [Do not use mixins](https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html).
