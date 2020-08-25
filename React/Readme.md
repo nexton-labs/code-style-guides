@@ -10,7 +10,6 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
 
   1. [Basic Rules](#basic-rules)
   1. [Hooks-Rules](#Hooks-Rules)
-  1. [Mixins](#mixins)
   1. [Deprecations](#Deprecations)
   1. [Naming](#naming)
   1. [Declaration](#declaration)
@@ -21,7 +20,6 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
   1. [Refs](#refs)
   1. [Parentheses](#parentheses)
   1. [Tags](#tags)
-  1. [`isMounted`](#ismounted)
 
 ## Basic Rules
 
@@ -29,7 +27,18 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
     - However, multiple [Stateless, or Pure, Components](https://facebook.github.io/react/docs/reusable-components.html#stateless-functions) are allowed per file. eslint: [`react/no-multi-comp`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-multi-comp.md#ignorestateless).
   - Always use JSX syntax.
   - Do not use `React.createElement` unless you’re initializing the app from a file that is not JSX.
-  - [`react/forbid-prop-types`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/forbid-prop-types.md) will allow `arrays` and `objects` only if it is explicitly noted what `array` and `object` contains, using `arrayOf`, `objectOf`, or `shape`.
+
+## PropTypes
+
+- PropTypes allow us to specify what props your component needs and the type they should be. Your component will work without setting propTypes, but it is good practice to define these as it will make your component more readable, act as documentation to other developers who are reading your component, and during development, React will warn you if you you try to set a prop which is a different type to the definition you have set for it.
+``` JSX
+Component.propTypes = {
+    randomObject: React.PropTypes.object,
+    callback: React.PropTypes.func,
+    ...
+};
+```
+[Documentation References](https://reactjs.org/docs/typechecking-with-proptypes.html)
 
 ## Hooks-Rules
   - Hooks are JavaScript functions, but you need to follow two rules when using them.
@@ -37,25 +46,122 @@ Forked from the excellent [Airbnb React Style Guide](https://github.com/airbnb/j
   ### Only Call Hooks at the Top Level
   - Don’t call Hooks inside loops, conditions, or nested functions. Instead, always use Hooks at the top level of your React function. By following this rule, you ensure that Hooks are called in the same order each time a component renders. That’s what allows React to correctly preserve the state of Hooks between multiple useState and useEffect calls
 
+  Correct Way
+  ```JSX
+  const Form = () => {
+  // 1. Use the accountName state variable
+  const [accountName, setAccountName] = useState('David');
+
+  // 2. Use an effect for persisting the form
+  useEffect(function persistForm() {
+    localStorage.setItem('formData', accountName);
+  });
+
+  // 3. Use the accountDetail state variable
+  const [accountDetail, setAccountDetail] = useState('Active');
+
+  // 4. Use an effect for updating the title
+  useEffect(function updateStatus() {
+    document.title = accountName + ' ' + accountDetail;
+  });
+
+  // ...
+}
+
+  ```
+
+  Bad Way
+
+  ```JSX
+  // 🔴 We're breaking the first rule by using a Hook in a condition
+  if (accountName !== '') {
+    useEffect(function persistForm() {
+      localStorage.setItem('formData', accountName);
+    });
+  }
+  ```
+  >The accountName !== '' condition is true on the first render, so we run this Hook. However, on the next render the user might clear the form, making the condition false. Now that we skip this Hook during rendering, the order of the Hook calls becomes different:
+
+  ```JSX
+  useState('David')           // 1. Read the accountName state variable (argument is ignored)
+  // useEffect(persistForm)   // 🔴 This Hook was skipped!
+  useState('Active')          // 🔴 2 (but was 3). Fail to read the accountDetails state variable
+  useEffect(updateStatus)     // 🔴 3 (but was 4). Fail to replace the effect
+  ```
+
   ### Only Call Hooks from React Functions
   - Don’t call Hooks from regular JavaScript functions. Instead, you can:
   - Call Hooks from React function components.
-  - Call Hooks from custom Hooks
 
-## Mixins
+  - Correct Way
 
-  - [Do not use mixins](https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html).
+  ```JSX
+  import React, { useState} from "react";
+  import ReactDOM from "react-dom";
 
-  > Why? Mixins introduce implicit dependencies, cause name clashes, and cause snowballing complexity. Most use cases for mixins can be accomplished in better ways via components, higher-order components, or utility modules.
+  const Account = (props) => {
+    const [name, setName] = useState("David");
+    return <p>Hello, {name}! The price is <b>{props.total}</b> and the total amount is <b>{props.amount}</b></p>
+  }
+  ReactDom.render(
+  <Account total={20} amount={5000} />,
+  document.getElementById('root')
+);```
+
+- Bad Way
+
+```JS
+  import { useState } = "react";
+
+  function toCelsius(fahrenheit) {
+    const [name, setName] = useState("David");
+    return (5/9) * (fahrenheit-32);
+  }
+  document.getElementById("demo").innerHTML = toCelsius;
+```
+
+  >Here we import the useState hook from the React package, and then declared our function. But this is invalid as it is not a React component.
+
+  - Call Hooks from custom Hooks.
+
+``` JS
+export default function useUserName(userName) {
+  const [isPresent, setIsPresent] = useState(false);
+  
+  useEffect(() => {
+    const data = MockedApi.fetchData();
+    data.then((res) => {
+      res.forEach((e) => {
+        if (e.name === userName) {
+          setIsPresent(true);
+        }
+     });
+    });
+  });
+    
+  return isPresent;}  
+```
+
+> A custom Hook is a JavaScript function whose name starts with use and that may call other Hooks. For example, useUserName is used below a custom Hook that calls the useState and useEffect hooks. It fetches data from an API, loops through the data, and calls setIsPresent() if the specific username it received is present in the API data.
+
+  
 
 ## Deprecations
-- The React team has decided to deprecate some of the lifecycle methods with React 17. The lifecycle methods below will soon be deprecated.
+  - The React team has decided to deprecate some of the lifecycle methods with React 17. The lifecycle methods below will soon be deprecated.
 
 ```
   - componentWillMount
   - componentWillRecieveProps
   - componentWillUpdate
 ```
+
+  [Do not use mixins](https://facebook.github.io/react/blog/2016/07/13/mixins-considered-harmful.html).
+
+  Why? Mixins introduce implicit dependencies, cause name clashes, and cause snowballing complexity. Most use cases for mixins can be accomplished in better ways via components, higher-order components, or utility modules.
+
+  - Do not use `isMounted`. eslint: [`react/no-is-mounted`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-is-mounted.md)
+
+  Why? `isMounted` is an anti-pattern, is on its way to being officially deprecated.
 
 ## Naming
 
@@ -609,18 +715,123 @@ We don’t recommend using indexes for keys if the order of items may change.
     }
     ```
 
-## `isMounted`
+# React.JS, Nexton Best Practice.
 
-  - Do not use `isMounted`. eslint: [`react/no-is-mounted`](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-is-mounted.md)
+1. [Keep components small and function-specific](#Keep-components-small-and-function-specific)
+1. [Using Hooks instead of Classes](#Using-Hooks-instead-of-Classes)
+1. [Reusability](#Reusability-is-important)
+1. [DRY your code](#DRY-your-code)
+1. [Components Name](#Components-Name)
+1. [Testing Code](#Testing-Code)
+1. [File Structure](#File-Structure)
 
-  > Why? [`isMounted` is an anti-pattern][anti-pattern], is  on its way to being officially deprecated.
+## Using Hooks instead of Classes
 
-  [anti-pattern]: https://facebook.github.io/react/blog/2015/12/16/ismounted-antipattern.html
+  - Classes confuse both people and machines With classes you need to understand binding and the context in which functions are called, which often becomes confusion.
 
-## Translation
+  - Often with classes Mutually unrelated code often ends up together or related code tends to be split apart, it becomes more and more difficult to maintain. An example of such a case is event listeners, where you add listeners in componentDidMount and remove them in componentWillUnmount . Hooks let you combine these two
 
-  This JSX/React style guide is also available in other languages:
+  - Hooks are a new addition to React in version 16.8 that allows you use state and other React features, like lifecycle methods, without writing a class.
 
-  - ![es](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Spain.png) **Español**: [agrcrobles/javascript](https://github.com/agrcrobles/javascript/tree/master/react)
- 
-**[⬆ back to top](#table-of-contents)**
+  - Hooks let you always use functions instead of having to constantly switch between functions, classes, higher-order components, and render props.
+
+  - Hooks allow us to reuse stateful logic without changing your component hierarchy.
+
+[Hooks API References](https://reactjs.org/docs/hooks-reference.html)
+
+##  Keep components small and function-specific
+- As we all know, with React, it’s possible to have huge components that execute a number of tasks. But a better way to design components is to keep them small, so that one component corresponds to one function.
+
+- Ideally, a single component should render a specific bit of your page or modify a particular behavior. There are many advantages to this.
+
+##  Reusability is important
+- By sticking to the rule of one function = one component, we can improve the reusability of components. We should skip trying to build a new component for a function if there already exists a component for that function.
+
+## DRY your code
+
+- You can achieve this by scrutinizing the code for patterns and similarities. If you find any, it’s possible you’re repeating code and there’s scope to eliminate duplication. Most likely, a bit of rewriting can make it more concise.
+
+```jsx
+
+const buttons = ['facebook', 'twitter', 'youtube'];
+
+return (
+  <div>
+    {
+      buttons.map( (button) => {
+        return (
+          <IconButton
+            onClick={doStuff( button )}
+            iconClass={button}
+          />
+        );
+      } )
+    }
+  </div>
+);
+    
+```
+## Components Name
+
+- It’s a good practice to name a component after the function that it executes so that it’s easily recognizable.
+
+- For example, ```ProductTable``` – it conveys instantly what the component does. On the other hand, if we name the component based on the need for the code, it can be confuse at a future point of time.
+
+## Testing Code
+
+- The code we write should behave as expected, and be testable easily and quickly. It’s a good practice to name your test files identical to the source files with a ```.test``` suffix. It’ll then be easy to find the test files.
+
+## File Structure
+
+- We organize all the files by function type ```components```, ```actions```, ```services```.
+
+
+### Components Structure
+
+#### Components
+- The main components of the App like TopBar, SideBar, and Footer should be in the components folder.
+- Small Components used in multiple components, should be be in the components folder.
+
+#### Pages Components
+- If there’s any small component used only by a particular Page Component , it makes sense to keep these smaller components all together within that component folder. The hierarchy will then be easy to understand – large components have their own folder and all their smaller parts are split into sub-folders. This way, we can easily extract code to any other project or even modify the code whenever we want.
+
+
+```
+my-app
+├── build
+├── node_modules
+├── public
+│   ├── favicon.ico
+│   ├── index.html
+│   └── manifest.json
+├── src
+│   ├── assets
+│   │   └──images
+│   │       └── logo.svg
+│   ├── components
+|   |   ├── Authentication
+|   |   |   ├── Auth.js
+|   |   |   └── AuthenticateRoute.js
+|   |   ├── Component
+|   |   |   ├── Component.js
+|   |   |   ├── Component.css
+|   |   |   └── Component.test.js
+│   │   ├── app
+│   │   ├── app.js
+│   │   └── app.test.js
+|   ├── config
+|   ├── helpers
+|   ├── pages
+|   ├── resources
+|   ├── services
+|   ├── store
+│   ├── utils
+│   │   ├── errorService.js
+│   │   └── errorService.test.js
+│   ├── index.js
+│   ├── index.html
+│   ├── routes.js
+├── .gitignore
+├── package.json
+└── README.md
+```
