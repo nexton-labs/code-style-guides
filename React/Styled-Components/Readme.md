@@ -1,4 +1,4 @@
-# Styled Components Best Practice.
+# Styled Components Guide.
 
 - Styled-components keeps track of which components are rendered on a page and injects their styles and nothing else, fully automatically. Combined with code splitting, this means your users load the least amount of code necessary.
 
@@ -10,14 +10,20 @@
 
 - Another interesting feature of styled components is that it allows us to write actual CSS in our JavaScript (not just CSS-as-JavaScript objects). 
 
-1. [FULL CSS SUPPORT](#Full-CSS-Support)
+1. [Split Container And Presentational Components](#Split-Container-And-Presentational-Components)
+1. [Full CSS Support](#Full-CSS-Support)
+1. [Global Styles](#Global-Styles)
+1. [Theming](#Theming)
+1. [Extending Styles](#Extending-Styles)
+1. [Passed props](#Passed-props)
+1. [Define Styled Components outside of the render method](#Define-Styled-Components-outside-of-the-render-method)
 
 
-# SPLIT CONTAINER AND PRESENTATIONAL COMPONENTS
+# Split Container And Presentational Components
 
 - With React, some of our components may have state associated with them. It's important to split components that handle data and/or logic (for example, data formatting) from components that handle styling. By separating these two concerns, reasoning about changes in our code base will be a lot easier.
 
-- By separating these two types of components, you avoid doing multiple unrelated changes at the same time, thus avoiding accidental errors.
+- By separating these two types of components, you avoid doing multiple unrelated changes at the same time, and avoiding accidental errors.
 
 
 # Full CSS Support
@@ -44,7 +50,7 @@ const Input = styled.input`
 This Input component will now have nice hover styles and will resize itself to be a bit bigger on large screens.
 
 
-# Global styles
+# Global Styles
 
 - Some styles are needed in all pages of our product, these styles stays inside index.global-styles.js files. These styles include the general styles needed in most of the project. The styled-components library provides us a helper function as named export for that too — injectGlobal can be used to add global styles using the now familiar tagged template literal syntax.
  
@@ -70,40 +76,43 @@ a:visited {
   
 }`;
 ```
+
 # Theming
 
-We created a theme.js default theme object which accepts our theme fundamentals like color and font size. And later we export to use it.
+Styled-components has full theming support by exporting a <ThemeProvider> wrapper component. This component provides a theme to all React components underneath itself via the context API. In the render tree all styled-components will have access to the provided theme, even when they are multiple levels deep.
 
 ``` JS
-export const theme = {
-color: {    
-  primary: '#064acb',
-  secondary: '#f2f3f3',
-  light: '#fafafa',    
-},
-fontSize: {    
-  lg: '34px',    
-  md: '23px',    
-  sm: '16px',    
-  xs: '12px',
-   }
-,};
-export const getFontSize = size => props => props.theme.fontSize[size];
-export const getColor = color => props => props.theme.color[color];
-```
-In our index.js file we wrap our App component where our application lives with Theme Provider and pass theme object. This will serve as a default theme.
+// Define our button, but with the use of props.theme this time
+const Button = styled.button`
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border-radius: 3px;
 
-``` JSX
+  /* Color the border and text with theme.main */
+  color: ${props => props.theme.main};
+  border: 2px solid ${props => props.theme.main};
+`;
 
-const rootElement = document.getElementById('root');
-ReactDOM.render(  
-<ThemeProvider theme={theme}>    
-  <BrowserRouter>      
-    <App />    
-  </BrowserRouter>  
-</ThemeProvider>,  
-rootElement,
+// We are passing a default theme for Buttons that arent wrapped in the ThemeProvider
+Button.defaultProps = {
+  theme: {
+     main: "palevioletred"
+  }
+}
+// Define what props.theme will look like
+const theme = {
+  main: "mediumseagreen"
+};
+render(
+  <div>
+    <Button>Normal</Button>
+    <ThemeProvider theme={theme}>
+      <Button>Themed</Button>
+    </ThemeProvider>
+  </div>
 );
+
 
 ```
 
@@ -140,7 +149,6 @@ render(
 ```
 
 # Passed props
-
 
 If the styled target is a simple element (e.g. styled.div), styled-components passes through any known HTML attribute to the DOM. If it is a custom React component (e.g. styled(MyComponent)), styled-components passes through all props.
 
@@ -198,4 +206,4 @@ const Wrapper = ({ message }) => {
 }
 ```
 
-[Styled-Components](https://www.styled-components.com/)
+[Styled-Components Documentation](https://www.styled-components.com/)
