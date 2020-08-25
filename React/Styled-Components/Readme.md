@@ -16,7 +16,7 @@
 1. [Theming](#Theming)
 1. [Extending Styles](#Extending-Styles)
 1. [Passed props](#Passed-props)
-1. [Define Styled Components outside of the render method](#Define-Styled-Components-outside-of-the-render-method)
+1. [Define Styled Components Outside Of The Render Method](#Define-Styled-Components-Outside-Of-The-Render-Method)
 
 
 # Split Container And Presentational Components
@@ -175,7 +175,7 @@ render(
 );
 ```
 
-# Define Styled Components outside of the render method
+# Define Styled Components Outside Of The Render Method
 
 - It is important to define your styled components outside of the render method, otherwise it will be recreated on every single render pass. Defining a styled component within the render method will thwart caching and drastically slow down rendering speed, and should be avoided.
 
