@@ -23,7 +23,7 @@ Using a Front-end Framework has a lot of benefits.
 
 # Material UI Framework
 
-- Material UI is added in our **Starter React Proyect V2** for allthe new poejects that we create at Nexton.
+- Material UI is added in our **Starter React Proyect V2** for all the new projects that we create at Nexton.
 
 - Material Design is a design language that was first introduced by Google in 2014. It’s a visual language that makes use of grid-based layouts, responsive animations and transitions, padding, and depth effects such as lighting and shadows.
 
