@@ -1,4 +1,4 @@
-# Benefits of Using a Front-end Framework
+# Benefits of Using a Front-end UI Framework
 
 Using a Front-end Framework has a lot of benefits.
 
@@ -23,7 +23,7 @@ Using a Front-end Framework has a lot of benefits.
 
 # Material UI Framework
 
-- Material UI is added in our **Starter React Proyect V2** for all the new projects that we create at Nexton.
+- Material UI is added in our **[Starter React Proyect V2](https://github.com/nexton-labs/react-starter-v2)** for all the new projects that we create at Nexton.
 
 - Material Design is a design language that was first introduced by Google in 2014. It’s a visual language that makes use of grid-based layouts, responsive animations and transitions, padding, and depth effects such as lighting and shadows.
 
@@ -62,6 +62,8 @@ Using a Front-end Framework has a lot of benefits.
 
 - There are five grid breakpoints: xs, sm, md, lg, and xl
 
+[Click here to check detailed documentation](https://material-ui.com/components/grid/)
+
 ## Icons
 
 - Icons are a huge part of material design, they are used in buttons to convey an action, to convey information e.t.c. It’s used to symbolize a command, file, device, or directory.
@@ -73,6 +75,9 @@ Using a Front-end Framework has a lot of benefits.
 - The SvgIcon component takes an SVG path element as its child and converts it to a React component that displays the path, and allows the icon to be styled and respond to mouse events. That can be seen in the example below:
 
 - Material-UI also has a package that ships with preset icons to be used in your React app. It’s a different package entirely, and it includes the official Material icons converted to SvgIcon components.
+
+[Click here to check detailed documentation](https://material-ui.com/components/icons/#icons)
+[MAterial UI Icons Library](https://material-ui.com/components/material-icons/#material-icons)
 
 ## Buttons
 
@@ -97,27 +102,35 @@ The Button component can take on many props such as color, variant, size e.t.c. 
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 ```
-
+[Click here to check detailed documentation](https://material-ui.com/components/app-bar/)
 ### Navigation
 
 - Bottom navigation menus are placed at the bottom and they make it easy to switch between top-level views in a single tap.
 
 - The navigation menu is characterized by three to five actions, each containing an icon and a label. Although it’s important to note that only navigation bars with three actions should contain both an icon and a label.
 
+[Click here to check detailed documentation](https://material-ui.com/components/bottom-navigation/)
+
 ### Tabs
 - Tabs make it easy to explore and switch between different views. A tab component can be a simple tab with no additions as seen in the first example below or a scrollable tab with multiple tabs.
 
 - A tab can also just consist of icons as titles/labels.
+
+[Click here to check detailed documentation](https://material-ui.com/components/tabs/)
 
 ### Lists
 - Lists present multiple line items vertically as a single continuous element.
 
 - Lists are made up of a continuous column of rows. Each row contains a tile. Primary actions fill the tile, and supplemental actions are represented by icons and text.
 
+[Click here to check detailed documentation](https://material-ui.com/components/tabs/)
+
 ### Cards
 - A card is a sheet of material that serves as an entry point to more detailed information.
 
 - Cards are a convenient means of displaying content composed of different elements. Cards are used to display information that can be easily glanced at and usually has a Call To Action.
+
+[Click here to check detailed documentation](https://material-ui.com/components/cards/)
 
 ### Modal
 - The modal component provides a solid foundation for creating dialogs, popovers, lightboxes e.t.c
@@ -130,12 +143,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 - It disables scrolling of the page content while open
 - Adds the appropriate ARIA roles are automatically
 
+[Click here to check detailed documentation](https://material-ui.com/components/modal/)
+
 ### Grid list
 - Grid lists are an alternative to standard list views seen above. A grid list consists of a repeated pattern of cells arrayed in a vertical and horizontal layout and it usually prominently features images.
 
 - An advanced example of a Grid list can be seen below, it features the use of the GridListTileBar to add an overlay to each GridListTile. The overlay can accommodate a title, subtitle and secondary action – in this example an IconButton which could be used to convey more information.
 
+[Click here to check detailed documentation](https://material-ui.com/components/grid-list/)
+
 ### Tables
+
 - Data tables display sets of raw data. They usually appear in desktop enterprise products.
 
 - A data table contains a header row at the top that lists column names, followed by rows for data.
@@ -144,9 +162,11 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 - An advanced usage of Tables can be seen in the example below. It uses checkboxes, which accompanies each row, if the user needs to select or manipulate data. It also uses clickable rows for selection.
 
+[Click here to check detailed documentation](https://material-ui.com/components/tables/)
+
 # Using Other Frameworks
 
 - Some projects at Nexton may require another frameworks like.
 
-- Rebass
-- Bootstrap - React Bootstrap
+- [Rebass](https://rebassjs.org)
+- [Bootstrap](https://getbootstrap.com) - [React Bootstrap](https://react-bootstrap.github.io)
